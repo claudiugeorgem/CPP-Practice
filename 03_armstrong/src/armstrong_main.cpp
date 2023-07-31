@@ -1,10 +1,23 @@
 #include <iostream>
+#include <string>
+#include <cmath>
+
+int numDigits(int number);
 
 bool isArmstrongNumber(int number)
 {
 	// TODO: implement some functionality to see if this number is an armstrong number
+	int copy = number;
+	int digits = numDigits(number);
+	int sum = 0;
 
-	return false;
+	while (copy != 0) 
+	{
+		sum += pow(copy % 10, 3);
+		copy /= 10;
+	}
+
+	return sum == number;
 }
 
 void printIsArmstrong(int number)
@@ -18,6 +31,8 @@ void printIsArmstrong(int number)
 		std::cout << "NOT Armstrong" << std::endl;
 	}
 }
+
+bool isNumber(std::string str);
 
 int main(int argc, char *argv[])
 {
@@ -53,6 +68,62 @@ int main(int argc, char *argv[])
 	
 	// TODO: read number / cast to integer
 
+	if (!isNumber(argumentAsString))
+	{
+		printf("Not a number.\n");
+		return 0;
+		
+	}
+	readNumber = std::stoi(argumentAsString);
+
 	printIsArmstrong(readNumber);
 	return 0;
+}
+
+bool isNumber(std::string str)
+{
+	if (str[0] == '-')
+	{
+		if (str.length() == 1)
+		{
+			return false;
+		}
+
+		for (int i = 1; i < str.length(); i++)
+		{
+			if (!isdigit(str[i]))
+			{
+				return false;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < str.length(); i++)
+		{
+			if (!isdigit(str[i]))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+int numDigits(int number) 
+{
+	int count = 0;
+
+	if (number == 0) 
+	{
+		return 1;
+	}
+
+	while (number != 0) 
+	{
+		number /= 10;
+		count++;
+	}
+
+	return count;
 }
