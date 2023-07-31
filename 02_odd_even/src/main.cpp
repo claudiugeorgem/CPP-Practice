@@ -15,6 +15,8 @@ void printOddOrEven(int number)
 	}
 }
 
+bool isNumber(std::string str);
+
 int main(int argc, char *argv[])
 {
 	int number = -13;
@@ -43,15 +45,53 @@ int main(int argc, char *argv[])
 	std::string argumentAsString = argv[1];
 	const char* argumentAsCharArray = argumentAsString.c_str();
 
-	//number = argv[1]; // No
-	//should use atoi?
+	// number = argv[1]; // No
+	// should use atoi?
 	// or std::stoi?
 
-	std::cout << argumentAsString << std::endl; // i think this should be removed
+	// std::cout << argumentAsString << std::endl; // i think this should be removed
+
+	if (!isNumber(argumentAsString))
+	{
+		std::cout << "Not a number.\n";
+		return 0;
+	}
+	
+	number = std::stoi(argumentAsString);
 
 	// --------------- stop
 
 	printOddOrEven(number);
 
 	return 0;
+}
+
+bool isNumber(std::string str)
+{
+	if (str[0] == '-')
+	{
+		if (str.length() == 1)
+		{
+			return false;
+		}
+
+		for (int i = 1; i < str.length(); i++)
+		{
+			if (!isdigit(str[i]))
+			{
+				return false;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < str.length(); i++)
+		{
+			if (!isdigit(str[i]))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
