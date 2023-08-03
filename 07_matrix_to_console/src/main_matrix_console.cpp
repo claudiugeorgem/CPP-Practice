@@ -13,24 +13,48 @@ private:
 
 	// TODO: store the data
 	// hints: you can use std::string, std::vectors + string, char**, vector<vector<char>>, etc
+	std::vector<std::vector<char>> matrix;
+
 public:
-	Matrix(size_t numColumnsX, size_t numLinesY)
+	Matrix(size_t numColumnsX, size_t numLinesY): 
+		column_count(numColumnsX), 
+		line_count(numLinesY),
+		matrix(numLinesY, std::vector<char>(numColumnsX))
 		// TODO: add functionality
 	{
 		// TODO: add functionality
+		column_count = numColumnsX;
+		line_count = numLinesY;
 	}
 
 	// Set an entire line
 	void setLine(size_t line_number, const std::string& data)
 	{
+		if (line_number >= line_count) {
+			std::cout << "line_number > 10 invalid due to limited height";
+		}
+		else {
+			for (int i = 0; i < line_count; i++) {
+				matrix[line_number][i] = data[i];
+			}
+		}
 	}
 
-	//OPTIONAL
-	//char getCellXY(size_t x, size_t y, char cell_content)
-	//{
-	//	// TODO: add functionality
-	//	return 0;
-	//}
+	// OPTIONAL
+	char getCellXY(size_t x, size_t y)
+	{
+		// TODO: add functionality
+		if (x > column_count) {
+			std::cout << "x > 20 invalid due to limited width";
+		}
+		else if (y > line_count) {
+			std::cout << "y > 10 invalid due to limited height";
+		}
+		else {
+			return matrix[y][x];
+		}
+		return 0;
+	}
 
 	/**
 		Sets the cell content for a specific cell identified by its coordinates (X and Y)
@@ -55,12 +79,28 @@ public:
 	void setCellXY(size_t x, size_t y, char cell_content)
 	{
 		// TODO: add functionality
+		if (x > column_count) {
+			std::cout << "x > 20 invalid due to limited width";
+		}
+		else if (y > line_count) {
+			std::cout << "y > 10 invalid due to limited height";
+		}
+		else {
+			matrix[y][x] = cell_content;
+		}
 	}
 
 	void print()
 	{
 		// print all lines and columns
 		// TODO: add functionality
+		for (int i = 0; i < line_count; i++) {
+			for (int j = 0; j < column_count; j++) {
+				std::cout << matrix[i][j] << " ";
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
 	}
 };
 
@@ -82,50 +122,53 @@ int main()
 
 	matrix.print();
 	// Would print
-/*
-X-----X----X-----XX-
---X-----------------
------X--------------
---------X-----------
------------X--------
---------------X-----
------------------X--
--------------------X
-------------------X-
------------------X--
-*/
+	/*
+	X-----X----X-----XX-
+	--X-----------------
+	-----X--------------
+	--------X-----------
+	-----------X--------
+	--------------X-----
+	-----------------X--
+	-------------------X
+	------------------X-
+	-----------------X--
+	*/
+
 	matrix.setCellXY(2, 1, '-');
 	matrix.print();
 	// Would print
-/*
-X-----X----X-----XX-
---------------------
------X--------------
---------X-----------
------------X--------
---------------X-----
------------------X--
--------------------X
-------------------X-
------------------X--
-*/
+	/*
+	X-----X----X-----XX-
+	--------------------
+	-----X--------------
+	--------X-----------
+	-----------X--------
+	--------------X-----
+	-----------------X--
+	-------------------X
+	------------------X-
+	-----------------X--
+	*/
 
 	matrix.setCellXY(3, 7, 'O');
 	matrix.print();
-/*
-X-----X----X-----XX-
---------------------
------X--------------
---------X-----------
------------X--------
---------------X-----
------------------X--
----O---------------X
-------------------X-
------------------X--
-*/
+	// Would print
+	/*
+	X-----X----X-----XX-
+	--------------------
+	-----X--------------
+	--------X-----------
+	-----------X--------
+	--------------X-----
+	-----------------X--
+	---O---------------X
+	------------------X-
+	-----------------X--
+	*/
 
 	// This should silently fail (not trigger an error): cell Y=11 invalid due to limited height.
 	matrix.setCellXY(3, 11, 'O');
+
 	return 0;
 }
