@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 /**
 	Define a simple book.
@@ -41,6 +42,31 @@ std::vector<Book> readBooksFromTextFile(const std::string& file_name)
 	//		...
 	//		results.emplace_back(myBook);
 
+	std::ifstream read(file_name);
+
+	if (!read.is_open())
+	{
+		std::cout << "Failed to open file: " << file_name << std::endl;
+	}
+	else {
+		Book current_book;
+		std::string book, authors;
+
+		while (!read.eof()) {
+			std::getline(read, book);
+			current_book.name = book;
+
+			std::getline(read, authors);
+			current_book.authors = authors;
+
+			results.emplace_back(current_book);
+			current_book.name.clear();
+			current_book.authors.clear();
+		}
+
+		read.close();
+	}
+
 	// TODO: END read file and add to results vector ------------------
 	return results;
 }
@@ -52,7 +78,7 @@ int main()
 	// E.g. https://stackoverflow.com/questions/7868936/read-file-line-by-line-using-ifstream-in-c
 
 	// Read the data
-	std::string input_data("../../data/ermahgerd_berks.txt");
+	std::string input_data("../data/ermahgerd_berks.txt");
 	std::cout << "Reading the data from " << input_data << std::endl;
 	std::vector<Book> books_from_file = readBooksFromTextFile(input_data);
 
