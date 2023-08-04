@@ -78,7 +78,7 @@ int main()
 	// E.g. https://stackoverflow.com/questions/7868936/read-file-line-by-line-using-ifstream-in-c
 
 	// Read the data
-	std::string input_data("../data/ermahgerd_berks.txt");
+	std::string input_data("../../data/ermahgerd_berks.txt");
 	std::cout << "Reading the data from " << input_data << std::endl;
 	std::vector<Book> books_from_file = readBooksFromTextFile(input_data);
 
