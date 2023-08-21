@@ -1,0 +1,9 @@
+pool:
+ name: cpp_practice_pool
+ demands:
+ - cmake
+ - VisualStudio_17.0
+
+steps:
+- script: echo First stage
+  displayName: 'Run a one line script'
